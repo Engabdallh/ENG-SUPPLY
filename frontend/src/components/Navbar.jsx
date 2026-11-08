@@ -41,7 +41,7 @@ function Navbar() {
           </button>
 
           <button className="login-button">
-            {t("nav.login").replace("الدخول", "")}
+            {t("nav.login")}
           </button>
 
           <button
