@@ -1,0 +1,21 @@
+{
+  "welcome": "Welcome to ENG SUPPLY",
+  "description": "Your complete platform for wholesale product supply",
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "login": "Login"
+  },
+  "hero": {
+    "badge": "Your Distribution Partner",
+    "title": "Everything Your Store Needs",
+    "highlight": "In One Place",
+    "description": "Discover a wide range of products with competitive wholesale prices and trusted quality.",
+    "explore": "Explore Products",
+    "contact": "Contact Us",
+    "scroll": "Discover More"
+  }
+}
