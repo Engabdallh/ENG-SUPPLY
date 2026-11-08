@@ -1,28 +1,44 @@
 
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
+const path = require("path");
+
+require("dotenv").config({
+  path: path.join(__dirname, ".env"),
+});
 
 const db = require("./config/database");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const frontendPath = path.join(__dirname, "../frontend/dist");
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// API Routes
 const healthRoutes = require("./routes/health.routes");
 
 app.use("/api/health", healthRoutes);
 
-// Main route
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Welcome to ENG SUPPLY API 🚀",
-  });
+// Serve React Frontend
+app.use(express.static(frontendPath));
+
+// React Router Fallback
+app.use((req, res, next) => {
+  if (
+    req.method === "GET" &&
+    req.accepts("html") &&
+    !req.path.startsWith("/api/")
+  ) {
+    return res.sendFile(
+      path.join(frontendPath, "index.html")
+    );
+  }
+
+  next();
 });
 
 // Not Found Middleware
@@ -40,13 +56,9 @@ async function startServer() {
 
     console.log("MySQL Connected Successfully! 🚀");
 
-    app.listen(PORT, () => {
-      console.log("\n=================================");
-      console.log("🚀 ENG SUPPLY SERVER STARTED");
-      console.log("=================================");
-      console.log(`🌐 Local: http://localhost:${PORT}`);
-      console.log(`❤️ Health: http://localhost:${PORT}/api/health`);
-      console.log("=================================\n");
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log("ENG SUPPLY SERVER STARTED");
+      console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
     console.error("Database Connection Failed:", error.message);
